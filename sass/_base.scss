@@ -20,6 +20,7 @@ body {
 	height: auto;
 	min-height: 100vh;
 	justify-content: space-between;
+  overflow-wrap: anywhere;
 }
 
 main {
@@ -64,7 +65,7 @@ main+footer {
 }
 
 footer {
-    font-size: 1.1em;
+  font-size: 1.1em;
 	.space {
 		width: 100%;
 		display: flex;
