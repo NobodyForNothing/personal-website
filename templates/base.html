@@ -3,21 +3,45 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=200, initial-scale=1">
-    {% if page is defined and page.description is defined %}
-      <meta name="description" content="{{ page.description }}">
-    {% elif section is defined and section.description is defined %}
-      <meta name="description" content="{{ section.description }}">
-    {% endif %}
-  <title>
-    {% if page is defined and page.title is defined %}
-      {{ page.title }}
-    {% elif section is defined and section.title is defined %}
-      {{ section.title }}
+  <meta name="viewport" content="width=200">
+  <meta name="text-scale" content="scale">
+  <meta name="color-scheme" content="dark">
+
+    {% if page %}
+      {% set title = page.title %}
+      {% if page.description %}
+        {% set description = page.description | trim %}
+      {% elif page.summary %}
+        {% set page_description = page.summary | trim %}
+      {% endif %}
+      {% set page_url = page.permalink %}
+    {% elif section %}
+      {% set title = section.title %}
+      {% if section.description %}
+        {% set description = section.description | trim %}
+      {% endif %}
+      {% set page_url = section.permalink %}
     {% else %}
-      derdilla.com
+      {% set page_title = "derdilla.com" %}
+      {% set page_url = config.base_url %}
     {% endif %}
-  </title>
+
+  <title>{% if page_title is defined %}{{ page.title }} | derdilla.com{% else %}derdilla.com{% endif %}</title>
+  {% if page_title is defined %}
+    <meta property="og:title" content="{{ page_title }}">
+  {% endif %}
+  {% if description is defined %}
+    <meta name="description" content="{{ description }}">
+    <meta property="og:description" content="{{ description }}">
+  {% endif %}
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link rel="canonical" href="{{ page_url }}">
+  <meta property="og:url" content="{{ page_url }}">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS feed of blog posts." href="/rss.xml">
+  <link rel="alternate" type="application/atom+xml" title="atom feed of blog posts." href="/atom.xml">
+
   {% block styles %} {% endblock %}
 </head>
 

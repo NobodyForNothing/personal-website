@@ -1,5 +1,5 @@
 +++
-title = "About: derdilla"
+title = "About"
 description = "Self description of programmer 'derdilla'"
 template = "about.html"
 +++
